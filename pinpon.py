@@ -41,8 +41,9 @@ def playerDown(player):
 def playerUp(player):
     player.sety(player.ycor() + 30)
 
-def updateScore(score):
-    score.write("0:0", font=("Arial", 20, "normal"))
+def updateScore(score, scoreToPrint):
+    score._clear()
+    score.write(str(scoreToPrint), font=("Arial", 20, "normal"))
 
 wn = turtle.Screen()
 wn.bgcolor("black")
@@ -54,6 +55,8 @@ playerB = initPlayer(350, 0)
 ball01 = initBall()
 scorePlayerA = initScore(playerA, 0)
 scorePlayerB = initScore(playerB, 0)
+scoreStored = {"playerA" : 0, 
+                "playerB" : 0}
 
 wn.listen()
 wn.onkeypress(partial(playerUp, playerA), "a")
@@ -72,9 +75,14 @@ while True:
     if ball01.xcor() > 390:
         ball01.goto(0, 0)
         ball01.dx *= -1
-        updateScore(scorePlayerA)
+        scoreStored['playerB'] = scoreStored.get("playerB") + 1
+        print(scoreStored)
+        print(scoreStored.get("playerB"))
+        updateScore(scorePlayerA, scoreStored.get("playerB"))
 
     if ball01.xcor() < -390:
         ball01.goto(0, 0)
         ball01.dx *= -1
-        updateScore(scorePlayerB)
+        scoreStored['playerA'] = scoreStored.get("playerA") + 1
+        print(scoreStored.get("playerA"))
+        updateScore(scorePlayerB, scoreStored.get("playerA"))
