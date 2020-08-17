@@ -86,3 +86,12 @@ while True:
         scoreStored['playerA'] = scoreStored.get("playerA") + 1
         print(scoreStored.get("playerA"))
         updateScore(scorePlayerB, scoreStored.get("playerA"))
+
+    if((ball01.xcor() < -350 ) and (ball01.ycor() < playerA.ycor() + 50)
+    and (ball01.ycor() > playerA.ycor() - 50)):
+        ball01.dx *= -1
+
+
+    if((ball01.xcor() > 350 ) and (ball01.ycor() < playerB.ycor() + 50)
+    and (ball01.ycor() > playerB.ycor() - 50)):
+        ball01.dx *= -1
