@@ -9,10 +9,11 @@ def initPlayer(posX, posY):
     player.color("white")
     player.penup()
     player.goto(posX, posY)
-    player.shapesize(stretch_wid=5,stretch_len=1)
+    player.shapesize(stretch_wid=5, stretch_len=1)
     return player
 
-def initBall(): 
+
+def initBall():
     ball = turtle.Turtle()
     ball.speed(-1)
     ball.shape("circle")
@@ -23,11 +24,25 @@ def initBall():
     ball.dy = -1
     return ball
 
+
+def initScore(player, points):
+    score = turtle.Turtle()
+    score.color("green")
+    score.penup()
+    score.goto(player.xcor(), 270)
+    score.write(str(points), font=("Arial", 20, "normal"))
+    return score
+
+
 def playerDown(player):
     player.sety(player.ycor() - 30)
 
+
 def playerUp(player):
     player.sety(player.ycor() + 30)
+
+def updateScore(score):
+    score.write("0:0", font=("Arial", 20, "normal"))
 
 wn = turtle.Screen()
 wn.bgcolor("black")
@@ -37,6 +52,8 @@ wn.tracer(0)
 playerA = initPlayer(-350, 0)
 playerB = initPlayer(350, 0)
 ball01 = initBall()
+scorePlayerA = initScore(playerA, 0)
+scorePlayerB = initScore(playerB, 0)
 
 wn.listen()
 wn.onkeypress(partial(playerUp, playerA), "a")
@@ -51,7 +68,13 @@ while True:
 
     if ball01.ycor() > 290 or ball01.ycor() < -290:
         ball01.dy *= -1
-    
-    if ball01.xcor() > 390 or ball01.xcor() < -390:
+
+    if ball01.xcor() > 390:
         ball01.goto(0, 0)
         ball01.dx *= -1
+        updateScore(scorePlayerA)
+
+    if ball01.xcor() < -390:
+        ball01.goto(0, 0)
+        ball01.dx *= -1
+        updateScore(scorePlayerB)
